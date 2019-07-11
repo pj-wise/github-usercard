@@ -6,6 +6,8 @@ const cards = document.querySelector('.cards');
 
 const me = 'pj-wise';
 
+
+
 axios.get(`https://api.github.com/users/${me}`)
   .then(data => {
     console.log('my github data:', data);
@@ -38,7 +40,7 @@ axios.get(`https://api.github.com/users/${me}`)
 */
 
  const followersArray = [
-   'BrandonJAllison',
+  'BrandonJAllison',
   'dannyvidal',
   'Forrestdarabian',
   'kkalpaxis',
@@ -80,6 +82,7 @@ axios.get(`https://api.github.com/users/${me}`)
 
 */
 
+
 function cardComponent(me) {
   //elements of component w/ classes added
   const myCard = document.createElement('div');
@@ -120,6 +123,10 @@ function cardComponent(me) {
   const myBio = document.createElement('p')
   myBio.textContent = me.bio;
 
+  const myCal = document.createElement('img');
+  myCal.classList.add('.calendar');
+  myCal.src = `http://ghchart.rshah.org/${me.login}`;
+
   //appending content
   myProfile.appendChild(myProfileLink);
   myInfo.appendChild(myName);
@@ -129,12 +136,9 @@ function cardComponent(me) {
   myInfo.appendChild(myFollowers);
   myInfo.appendChild(myfollowing);
   myInfo.appendChild(myBio);
+  myInfo.appendChild(myCal);
   myCard.appendChild(myImg);
   myCard.appendChild(myInfo);
-  
-  
-  
-  
   
   return myCard
 }
