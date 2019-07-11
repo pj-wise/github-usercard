@@ -51,13 +51,47 @@ const followersArray = [];
 
 */
 
-function cardComponent(gitObj) {
-  //elements of component 
-  const gitCard = document.createElement('div');
-  gitCard.classList.add('card');
+function cardComponent(myObj) {
+  //elements of component w/ classes added
+  const myCard = document.createElement('div');
+  myCard.classList.add('card');
 
-  const gitImg = document.createElement('img');
-  gitImg.textContent = `${gitObj.avatar_url}`;
+  const myImg = document.createElement('img');
+  myImg.src = `${myObj.avatar_url}`;
+
+  const myInfo = document.createElement('div');
+  myInfo.classList.add('card-info');
+
+  const myName = document.createElement('h3');
+  myName.classList.add('name');
+  myName.textContent = `${myObj.name}`;
+
+  const myUser = document.createElement('p');
+  myUser.classList.add('username');
+  myUser.textContent = `${myObj.login}`;
+
+  const myLocation = document.createElement('p');
+  myLocation.textContent = `${myObj.location}`;
+
+  const myProfile = document.createElement('p')
+  myProfile.textContent = 'Profile:';
+
+  const myProfileLink = document.createElement('a');
+  myProfileLink.textContent = `${myObj.html_url}`;
+  myProfileLink.href = `${myObj.html_url}`;
+
+  const myFollowers = document.createElement('p');
+  myFollowers.textContent = `${myObj.followers}`;
+
+  const myfollowing = document.createElement('p');
+  myfollowing.textContent = `${myObj.following}`;
+
+  const myBio = document.createElement('p')
+  myBio.textContent = `${myObj.bio}`;
+
+  //appending content
+
+  return cardComponent
 }
 
 /* List of LS Instructors Github username's: 
