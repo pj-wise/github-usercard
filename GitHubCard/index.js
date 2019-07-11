@@ -2,10 +2,18 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
+const cards = document.querySelector('.cards');
 
-axios.get('https://api.github.com/users/pj-wise')
+const me = 'pj-wise';
+
+axios.get(`https://api.github.com/users/${me}`)
   .then(data => {
-    console.log('response:', data);
+    console.log('my github data:', data);
+    const myGitCard = cardComponent(data.data)
+    cards.appendChild(myGitCard);
+  })
+  .catch(err => {
+    console.log('WHOOPS! SOMETHINGS WRONG. GO FIX IT', err);
   })
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
@@ -19,6 +27,8 @@ axios.get('https://api.github.com/users/pj-wise')
            create a new component and add it to the DOM as a child of .cards
 */
 
+
+
 /* Step 5: Now that you have your own card getting added to the DOM, either 
           follow this link in your browser https://api.github.com/users/<Your github name>/followers 
           , manually find some other users' github handles, or use the list found 
@@ -29,7 +39,7 @@ axios.get('https://api.github.com/users/pj-wise')
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+// const followersArray = [];
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -51,49 +61,64 @@ const followersArray = [];
 
 */
 
-function cardComponent(myObj) {
+function cardComponent(me) {
   //elements of component w/ classes added
   const myCard = document.createElement('div');
   myCard.classList.add('card');
 
   const myImg = document.createElement('img');
-  myImg.src = `${myObj.avatar_url}`;
+  myImg.src = me.avatar_url;
 
   const myInfo = document.createElement('div');
   myInfo.classList.add('card-info');
 
   const myName = document.createElement('h3');
   myName.classList.add('name');
-  myName.textContent = `${myObj.name}`;
+  myName.textContent = me.name;
 
   const myUser = document.createElement('p');
   myUser.classList.add('username');
-  myUser.textContent = `${myObj.login}`;
+  myUser.textContent = me.login;
 
   const myLocation = document.createElement('p');
-  myLocation.textContent = `${myObj.location}`;
+  myLocation.textContent = me.location;
 
   const myProfile = document.createElement('p')
-  myProfile.textContent = 'Profile:';
+  myProfile.textContent = 'Profile: ';
+  //appending link abd text to profile
+  
 
   const myProfileLink = document.createElement('a');
-  myProfileLink.textContent = `${myObj.html_url}`;
-  myProfileLink.href = `${myObj.html_url}`;
+  myProfileLink.textContent = me.html_url;
+  myProfileLink.href = me.html_url;
 
   const myFollowers = document.createElement('p');
-  myFollowers.textContent = `${myObj.followers}`;
+  myFollowers.textContent = `followers: ${me.followers}`;
 
   const myfollowing = document.createElement('p');
-  myfollowing.textContent = `${myObj.following}`;
+  myfollowing.textContent = `following: ${me.following}`;
 
   const myBio = document.createElement('p')
-  myBio.textContent = `${myObj.bio}`;
+  myBio.textContent = me.bio;
 
   //appending content
-
-  return cardComponent
+  myProfile.appendChild(myProfileLink);
+  myInfo.appendChild(myName);
+  myInfo.appendChild(myUser);
+  myInfo.appendChild(myLocation);
+  myInfo.appendChild(myProfile);
+  myInfo.appendChild(myFollowers);
+  myInfo.appendChild(myfollowing);
+  myInfo.appendChild(myBio);
+  myCard.appendChild(myImg);
+  myCard.appendChild(myInfo);
+  
+  
+  
+  
+  
+  return myCard
 }
-
 /* List of LS Instructors Github username's: 
   tetondan
   dustinmyers
