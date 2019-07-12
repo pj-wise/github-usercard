@@ -2,6 +2,21 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
+const cards = document.querySelector('.cards');
+
+const me = 'pj-wise';
+
+
+
+axios.get(`https://api.github.com/users/${me}`)
+  .then(data => {
+    console.log('my github data:', data);
+    const myGitCard = cardComponent(data.data)
+    cards.appendChild(myGitCard);
+  })
+  .catch(err => {
+    console.log('WHOOPS! SOMETHINGS WRONG. GO FIX IT', err);
+  })
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -24,7 +39,28 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+ const followersArray = [
+  'BrandonJAllison',
+  'dannyvidal',
+  'Forrestdarabian',
+  'kkalpaxis',
+  'JCRN',
+  'Bquizza5'
+ ];
+
+ followersArray.forEach(follower =>{
+  axios.get(`https://api.github.com/users/${follower}`)
+    .then(data => {
+      console.log('my github data:', data);
+      const myGitCard = cardComponent(data.data)
+      cards.appendChild(myGitCard);
+    })
+    .catch(err => {
+      console.log('WHOOPS! SOMETHINGS WRONG. GO FIX IT', err);
+    })
+  })
+
+ 
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -46,6 +82,66 @@ const followersArray = [];
 
 */
 
+
+function cardComponent(me) {
+  //elements of component w/ classes added
+  const myCard = document.createElement('div');
+  myCard.classList.add('card');
+
+  const myImg = document.createElement('img');
+  myImg.src = me.avatar_url;
+
+  const myInfo = document.createElement('div');
+  myInfo.classList.add('card-info');
+
+  const myName = document.createElement('h3');
+  myName.classList.add('name');
+  myName.textContent = me.name;
+
+  const myUser = document.createElement('p');
+  myUser.classList.add('username');
+  myUser.textContent = me.login;
+
+  const myLocation = document.createElement('p');
+  myLocation.textContent = me.location;
+
+  const myProfile = document.createElement('p')
+  myProfile.textContent = 'Profile: ';
+  //appending link abd text to profile
+  
+
+  const myProfileLink = document.createElement('a');
+  myProfileLink.textContent = me.html_url;
+  myProfileLink.href = me.html_url;
+
+  const myFollowers = document.createElement('p');
+  myFollowers.textContent = `followers: ${me.followers}`;
+
+  const myfollowing = document.createElement('p');
+  myfollowing.textContent = `following: ${me.following}`;
+
+  const myBio = document.createElement('p')
+  myBio.textContent = me.bio;
+
+  const myCal = document.createElement('img');
+  myCal.classList.add('.calendar');
+  myCal.src = `http://ghchart.rshah.org/${me.login}`;
+
+  //appending content
+  myProfile.appendChild(myProfileLink);
+  myInfo.appendChild(myName);
+  myInfo.appendChild(myUser);
+  myInfo.appendChild(myLocation);
+  myInfo.appendChild(myProfile);
+  myInfo.appendChild(myFollowers);
+  myInfo.appendChild(myfollowing);
+  myInfo.appendChild(myBio);
+  myInfo.appendChild(myCal);
+  myCard.appendChild(myImg);
+  myCard.appendChild(myInfo);
+  
+  return myCard
+}
 /* List of LS Instructors Github username's: 
   tetondan
   dustinmyers
